@@ -3,16 +3,22 @@ import os
 
 def move_file(command: str) -> None:
     command_parts = command.split()
-    if len(command_parts) < 3 or command_parts[0] != "mv":
+    if len(command_parts) != 3 or command_parts[0] != "mv":
         return
-    command_type, input_file, others = command_parts
-    *dirs, output_file = others.split("/")
+    command_type, input_file, destination = command_parts
+
+    dirs, output_file = os.path.split(destination)
+
+    if not output_file:
+        output_file = input_file
     if dirs:
-        os.makedirs("/".join(dirs), exist_ok=True)
+        os.makedirs(dirs, exist_ok=True)
+        output_file = os.path.join(dirs, output_file)
+    print(output_file)
     try:
         with (
             open(input_file) as file_from,
-            open(others, "w") as file_to
+            open(output_file, "w") as file_to
         ):
             file_to.write(file_from.read())
         os.remove(input_file)
