@@ -14,7 +14,7 @@ def move_file(command: str) -> None:
     if dirs:
         os.makedirs(dirs, exist_ok=True)
         output_file = os.path.join(dirs, output_file)
-    print(output_file)
+
     try:
         with (
             open(input_file) as file_from,
