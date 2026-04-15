@@ -10,7 +10,7 @@ def move_file(command: str) -> None:
     dirs, output_file = os.path.split(destination)
 
     if not output_file:
-        output_file = input_file
+        output_file = os.path.basename(input_file)
     if dirs:
         os.makedirs(dirs, exist_ok=True)
         output_file = os.path.join(dirs, output_file)
